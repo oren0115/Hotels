@@ -1,14 +1,16 @@
 import React from "react";
+import { Card, CardContent } from "../../components/ui/card";
+import { Input } from "../../components/ui/input";
+import { Textarea } from "../../components/ui/textarea";
+import { Button } from "../../components/ui/button";
 import {
-  Card,
-  CardBody,
-  Input,
-  Textarea,
-  Button,
   Select,
+  SelectContent,
   SelectItem,
-  Spinner,
-} from "@heroui/react";
+  SelectTrigger,
+  SelectValue,
+} from "../../components/ui/select";
+import { Spinner } from "../../components/ui/spinner";
 import { Icon } from "@iconify/react";
 
 const contactInfo = [
@@ -122,7 +124,7 @@ const Contact = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h1 className="text-3xl font-bold mb-4">Hubungi Kami</h1>
-          <p className="text-default-500 max-w-2xl mx-auto">
+          <p className="text-gray-500 max-w-2xl mx-auto">
             Punya pertanyaan? Kami senang mendengar dari Anda. Kirimkan pesan
             dan kami akan merespons secepatnya.
           </p>
@@ -131,7 +133,7 @@ const Contact = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
           {contactInfo.map((info, index) => (
             <Card key={index} className="text-center">
-              <CardBody>
+              <CardContent className="p-6">
                 <div className="flex flex-col items-center">
                   <div className="p-3 rounded-full bg-gold/10 mb-4">
                     <Icon icon={info.icon} className="w-6 h-6 text-gold" />
@@ -139,92 +141,119 @@ const Contact = () => {
                   <h3 className="text-lg font-semibold mb-2">{info.title}</h3>
                   <a
                     href={info.link}
-                    className="text-default-500 hover:text-gold transition-colors">
+                    className="text-gray-500 hover:text-gold transition-colors">
                     {info.content}
                   </a>
                 </div>
-              </CardBody>
+              </CardContent>
             </Card>
           ))}
         </div>
 
         <Card className="max-w-2xl mx-auto">
-          <CardBody>
+          <CardContent className="p-6">
             {isSuccess ? (
-              <div className="text-center py-8">
-                <div className="p-3 rounded-full bg-success/10 mb-4 inline-block">
-                  <Icon icon="lucide:check" className="w-6 h-6 text-success" />
+                <div className="text-center py-8">
+                  <div className="p-3 rounded-full bg-emerald-500/10 mb-4 inline-block">
+                    <Icon icon="lucide:check" className="w-6 h-6 text-emerald-500" />
                 </div>
                 <h3 className="text-xl font-semibold mb-2">Pesan Terkirim!</h3>
-                <p className="text-default-500 mb-4">
+                <p className="text-gray-500 mb-4">
                   Terima kasih telah menghubungi kami. Kami akan segera
                   menghubungi Anda kembali.
                 </p>
-                <Button color="primary" onPress={() => setIsSuccess(false)}>
+                <Button onClick={() => setIsSuccess(false)}>
                   Kirim Pesan Lagi
                 </Button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
-                <Input
-                  label="Nama"
-                  placeholder="Masukkan nama Anda"
-                  value={formData.name}
-                  onChange={(e) => handleChange("name", e.target.value)}
-                  isInvalid={!!errors.name}
-                  errorMessage={errors.name}
-                  isRequired
-                />
+                <div className="space-y-1">
+                  <label className="text-sm font-medium">Nama</label>
+                  <Input
+                    placeholder="Masukkan nama Anda"
+                    value={formData.name}
+                    onChange={(e) => handleChange("name", e.target.value)}
+                    aria-invalid={!!errors.name}
+                    aria-describedby={errors.name ? "name-error" : undefined}
+                  />
+                  {errors.name && (
+                    <p id="name-error" className="text-xs text-red-500">
+                      {errors.name}
+                    </p>
+                  )}
+                </div>
 
-                <Input
-                  type="email"
-                  label="Email"
-                  placeholder="Masukkan email Anda"
-                  value={formData.email}
-                  onChange={(e) => handleChange("email", e.target.value)}
-                  isInvalid={!!errors.email}
-                  errorMessage={errors.email}
-                  isRequired
-                />
+                <div className="space-y-1">
+                  <label className="text-sm font-medium">Email</label>
+                  <Input
+                    type="email"
+                    placeholder="Masukkan email Anda"
+                    value={formData.email}
+                    onChange={(e) => handleChange("email", e.target.value)}
+                    aria-invalid={!!errors.email}
+                    aria-describedby={errors.email ? "email-error" : undefined}
+                  />
+                  {errors.email && (
+                    <p id="email-error" className="text-xs text-red-500">
+                      {errors.email}
+                    </p>
+                  )}
+                </div>
 
-                <Select
-                  label="Subjek"
-                  placeholder="Pilih subjek"
-                  value={formData.subject}
-                  onChange={(e) => handleChange("subject", e.target.value)}
-                  isInvalid={!!errors.subject}
-                  errorMessage={errors.subject}
-                  isRequired>
-                  {subjects.map((subject) => (
-                    <SelectItem key={subject.key} textValue={subject.label}>
-                      {subject.label}
-                    </SelectItem>
-                  ))}
-                </Select>
+                <div className="space-y-1">
+                  <label className="text-sm font-medium">Subjek</label>
+                  <Select
+                    value={formData.subject}
+                    onValueChange={(value) => handleChange("subject", value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Pilih subjek" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {subjects.map((subject) => (
+                        <SelectItem key={subject.key} value={subject.key}>
+                          {subject.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {errors.subject && (
+                    <p className="text-xs text-red-500">{errors.subject}</p>
+                  )}
+                </div>
 
-                <Textarea
-                  label="Pesan"
-                  placeholder="Masukkan pesan Anda"
-                  value={formData.message}
-                  onChange={(e) => handleChange("message", e.target.value)}
-                  minRows={4}
-                  isInvalid={!!errors.message}
-                  errorMessage={errors.message}
-                  isRequired
-                />
+                <div className="space-y-1">
+                  <label className="text-sm font-medium">Pesan</label>
+                  <Textarea
+                    placeholder="Masukkan pesan Anda"
+                    value={formData.message}
+                    onChange={(e) => handleChange("message", e.target.value)}
+                    rows={4}
+                    aria-invalid={!!errors.message}
+                    aria-describedby={
+                      errors.message ? "message-error" : undefined
+                    }
+                  />
+                  {errors.message && (
+                    <p id="message-error" className="text-xs text-red-500">
+                      {errors.message}
+                    </p>
+                  )}
+                </div>
 
                 <Button
                   type="submit"
-                  color="primary"
                   size="lg"
-                  className="w-full"
-                  isLoading={isSubmitting}
-                  startContent={isSubmitting ? <Spinner size="sm" /> : null}>
+                  className="w-full flex items-center justify-center gap-2"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting && <Spinner size="sm" />}
                   {isSubmitting ? "Mengirim..." : "Kirim Pesan"}
                 </Button>
               </form>
             )}
-          </CardBody>
+          </CardContent>
         </Card>
       </div>
     </main>

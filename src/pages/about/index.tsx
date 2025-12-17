@@ -1,4 +1,4 @@
-import { Card, CardBody } from "@heroui/react";
+import { Card, CardContent } from "../../components/ui/card";
 
 const About = () => {
   return (
@@ -13,7 +13,7 @@ const About = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <Card>
-            <CardBody>
+            <CardContent className="p-6 space-y-2">
               <h2 className="text-2xl font-semibold mb-4">Kisah Kami</h2>
               <p className="text-gray-600">
                 Didirikan dengan visi untuk mendefinisikan ulang kemewahan dalam
@@ -21,26 +21,26 @@ const About = () => {
                 pelayanan istimewa sejak awal berdirinya. Kami percaya dalam
                 menciptakan pengalaman berkesan yang tak terlupakan.
               </p>
-            </CardBody>
+            </CardContent>
           </Card>
         </div>
 
         <div>
           <Card>
-            <CardBody>
+            <CardContent className="p-6 space-y-2">
               <h2 className="text-2xl font-semibold mb-4">Misi Kami</h2>
               <p className="text-gray-600">
                 Memberikan pengalaman perhotelan yang tiada tanding melalui
                 pelayanan yang dipersonalisasi, akomodasi mewah, dan komitmen
                 terhadap keunggulan di setiap aspek operasional kami.
               </p>
-            </CardBody>
+            </CardContent>
           </Card>
         </div>
 
         <div className="md:col-span-2">
           <Card>
-            <CardBody>
+            <CardContent className="p-6 space-y-4">
               <h2 className="text-2xl font-semibold mb-4">Nilai-Nilai Kami</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
@@ -64,7 +64,7 @@ const About = () => {
                   </p>
                 </div>
               </div>
-            </CardBody>
+            </CardContent>
           </Card>
         </div>
       </div>

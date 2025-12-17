@@ -1,4 +1,5 @@
-import { Card, CardBody, Button } from "@heroui/react";
+import { Card, CardContent } from "../../components/ui/card";
+import { Button } from "../../components/ui/button";
 
 const Careers = () => {
   const jobOpenings = [
@@ -35,7 +36,7 @@ const Careers = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <Card>
-            <CardBody>
+            <CardContent className="p-6 space-y-4">
               <h2 className="text-2xl font-semibold mb-4">
                 Mengapa Bekerja Bersama Kami
               </h2>
@@ -65,13 +66,13 @@ const Careers = () => {
                   </p>
                 </li>
               </ul>
-            </CardBody>
+            </CardContent>
           </Card>
         </div>
 
         <div>
           <Card>
-            <CardBody>
+            <CardContent className="p-6 space-y-4">
               <h2 className="text-2xl font-semibold mb-4">Budaya Kami</h2>
               <p className="text-gray-600 mb-4">
                 Kami menumbuhkan budaya inovasi, rasa hormat, dan pembelajaran
@@ -83,7 +84,7 @@ const Careers = () => {
                 biasa bagi para tamu sambil membangun karier yang memuaskan di
                 bidang perhotelan.
               </p>
-            </CardBody>
+            </CardContent>
           </Card>
         </div>
 
@@ -93,17 +94,17 @@ const Careers = () => {
             {jobOpenings.map((job, index) => (
               <div key={index}>
                 <Card>
-                  <CardBody>
+                  <CardContent className="p-6 space-y-2">
                     <h3 className="text-xl font-medium mb-2">{job.title}</h3>
                     <p className="text-gray-600 mb-2">
                       Departemen: {job.department}
                     </p>
                     <p className="text-gray-600 mb-2">Lokasi: {job.location}</p>
                     <p className="text-gray-600 mb-4">Tipe: {job.type}</p>
-                    <Button color="primary" variant="solid">
+                    <Button>
                       Lamar Sekarang
                     </Button>
-                  </CardBody>
+                  </CardContent>
                 </Card>
               </div>
             ))}

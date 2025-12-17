@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import { Spinner } from "@heroui/react";
+import { Spinner } from "../components/ui/spinner";
 
 const Home = React.lazy(() => import("../pages/home"));
 const Rooms = React.lazy(() => import("../pages/rooms"));
@@ -17,7 +17,7 @@ export const AppRoutes = () => {
     <React.Suspense
       fallback={
         <div className="h-screen w-full flex items-center justify-center">
-          <Spinner size="lg" color="primary" />
+          <Spinner size="lg" />
         </div>
       }>
       <Routes>

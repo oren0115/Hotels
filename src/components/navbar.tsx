@@ -1,16 +1,6 @@
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import {
-  Navbar as HeroNavbar,
-  NavbarBrand,
-  NavbarContent,
-  NavbarItem,
-  Link,
-  NavbarMenu,
-  NavbarMenuToggle,
-  NavbarMenuItem,
-  Button
-} from "@heroui/react";
+import { Button } from "./ui/button";
 
 export const AcmeLogo = () => {
   return (
@@ -30,62 +20,71 @@ export const Navbar = () => {
   const navigate = useNavigate();
 
   const menuItems = [
-    { name: "Our Hotels", path: "/" },
-    { name: "Explore", path: "/explore" },
-    { name: "Rooms & Rates", path: "/rooms" },
-    { name: "Facilities", path: "/facilities" },
-    { name: "Contact Us", path: "/contact" },
+    { name: "Hotel Kami", path: "/" },
+    { name: "Jelajahi", path: "/explore" },
+    { name: "Kamar & Tarif", path: "/rooms" },
+    { name: "Fasilitas", path: "/facilities" },
+    { name: "Hubungi Kami", path: "/contact" },
   ];
 
   return (
-    <HeroNavbar
-      maxWidth="xl"
-      height="header"
-      className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md p-5"
-      isMenuOpen={isMenuOpen}
-      onMenuOpenChange={setIsMenuOpen}>
-      <NavbarContent className="sm:hidden" justify="start">
-        <NavbarMenuToggle
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        />
-      </NavbarContent>
-
-      <NavbarContent className="sm:hidden pr-3" justify="center">
-        <NavbarBrand>
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-border">
+      <nav className="max-w-6xl mx-auto flex items-center justify-between px-4 py-4">
+        <button
+          className="flex items-center gap-2"
+          onClick={() => navigate("/")}
+          aria-label="Go to home"
+        >
           <AcmeLogo />
-          <Link className="font-bold text-inherit" onPress={() => navigate("/")}>Tangerang Hotels</Link>
-        </NavbarBrand>
-      </NavbarContent>
+          <span className="font-bold text-lg">Tangerang Hotels</span>
+        </button>
 
-      <NavbarContent className="hidden sm:flex gap-4" justify="end">
-        <NavbarBrand >
-          <AcmeLogo />
-          <Link className="font-bold text-inherit" onPress={() => navigate("/")}>Tangerang Hotels</Link>
-        </NavbarBrand>
-        {menuItems.map((item) => (
-          <NavbarItem key={item.path} >
-            <Link as={RouterLink} to={item.path} className="font-medium text-inherit">
-              {item.name}
-            </Link>
-          </NavbarItem>
-        ))}
-      </NavbarContent>
-
-      <NavbarMenu className="pt-0 top-0">
-        {menuItems.map((item) => (
-          <NavbarMenuItem key={item.path}>
-            <Link
-              as={RouterLink}
+        <div className="hidden sm:flex items-center gap-6">
+          {menuItems.map((item) => (
+            <RouterLink
+              key={item.path}
               to={item.path}
-              size="lg"
-              className="w-full text-inherit font-medium"
-              onPress={() => setIsMenuOpen(false)}>
+              className="font-medium text-sm text-foreground/80 hover:text-foreground transition-colors"
+            >
               {item.name}
-            </Link>
-          </NavbarMenuItem>
-        ))}
-      </NavbarMenu>
-    </HeroNavbar>
+            </RouterLink>
+          ))}
+        </div>
+
+        <div className="sm:hidden">
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label={isMenuOpen ? "Tutup menu" : "Buka menu"}
+            onClick={() => setIsMenuOpen((v) => !v)}
+          >
+            <span className="sr-only">
+              {isMenuOpen ? "Tutup menu navigasi" : "Buka menu navigasi"}
+            </span>
+            <div className="space-y-1">
+              <span className="block h-0.5 w-5 bg-foreground" />
+              <span className="block h-0.5 w-5 bg-foreground" />
+            </div>
+          </Button>
+        </div>
+      </nav>
+
+      {isMenuOpen && (
+        <div className="sm:hidden bg-white/95 backdrop-blur-md border-t border-border">
+          <div className="max-w-6xl mx-auto px-4 py-3 space-y-2">
+            {menuItems.map((item) => (
+              <RouterLink
+                key={item.path}
+                to={item.path}
+                className="block py-2 text-sm font-medium text-foreground/80 hover:text-foreground"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {item.name}
+              </RouterLink>
+            ))}
+          </div>
+        </div>
+      )}
+    </header>
   );
 };

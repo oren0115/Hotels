@@ -1,4 +1,4 @@
-import { Card, CardBody, Image } from "@heroui/react";
+import { Card, CardContent } from "../../components/ui/card";
 import { Icon } from "@iconify/react";
 
 const facilities = [
@@ -70,10 +70,9 @@ const facilities = [
 const FacilityCard = ({ facility }: { facility: (typeof facilities)[0] }) => {
   return (
     <Card className="mb-8">
-      <CardBody>
+      <CardContent className="p-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Image
-            removeWrapper
+          <img
             alt={facility.title}
             className="w-full h-[300px] object-cover rounded-lg"
             src={facility.image}
@@ -86,7 +85,7 @@ const FacilityCard = ({ facility }: { facility: (typeof facilities)[0] }) => {
               <h2 className="text-2xl font-bold">{facility.title}</h2>
             </div>
 
-            <p className="text-default-500 mb-6">{facility.description}</p>
+            <p className="text-gray-500 mb-6">{facility.description}</p>
 
             <div className="grid grid-cols-2 gap-4">
               {facility.features.map((feature, index) => (
@@ -98,7 +97,7 @@ const FacilityCard = ({ facility }: { facility: (typeof facilities)[0] }) => {
             </div>
           </div>
         </div>
-      </CardBody>
+      </CardContent>
     </Card>
   );
 };
@@ -109,7 +108,7 @@ const Facilities = () => {
       <div className="container mx-auto px-section">
         <div className="text-center mb-12">
           <h1 className="text-3xl font-bold mb-4">Fasilitas Kami</h1>
-          <p className="text-default-500 max-w-2xl mx-auto">
+          <p className="text-gray-500 max-w-2xl mx-auto">
             Rasakan kemewahan dan kenyamanan dengan fasilitas kelas dunia kami
             yang dirancang untuk membuat masa menginap Anda luar biasa.
           </p>

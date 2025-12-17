@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Card, CardBody, Button, Image } from "@heroui/react";
+import { Card, CardContent } from "./ui/card";
+import { Button } from "./ui/button";
 import { Icon } from "@iconify/react";
 
 type AmenityType =
@@ -107,17 +108,15 @@ export const RoomsSection = () => {
           {rooms.map((room) => (
             <Card
               key={room.id}
-              className="w-full hover:shadow-lg transition-shadow duration-300">
-              <CardBody className="p-0">
-                <Image
-                  className="w-full h-48 object-cover"
-                  removeWrapper
-                  alt={room.title}
-                  src={room.image}
-                />
-                <div className="p-4">
-                  <h3 className="text-lg font-semibold mb-2">{room.title}</h3>
-                  <p className="text-gray-600 text-sm mb-3">
+              className="w-full overflow-hidden hover:shadow-lg transition-shadow duration-300">
+              <img
+                className="w-full h-48 object-cover"
+                alt={room.title}
+                src={room.image}
+              />
+              <CardContent className="p-4 space-y-3">
+                  <h3 className="text-lg font-semibold">{room.title}</h3>
+                  <p className="text-gray-600 text-sm">
                     {room.description}
                   </p>
                   <div className="flex items-center gap-4 mb-3">
@@ -130,7 +129,7 @@ export const RoomsSection = () => {
                       <span className="text-sm">{room.size}</span>
                     </div>
                   </div>
-                  <div className="flex flex-wrap gap-2 mb-4">
+                  <div className="flex flex-wrap gap-2">
                     {room.amenities.slice(0, 3).map((amenity) => (
                       <div
                         key={amenity}
@@ -147,7 +146,7 @@ export const RoomsSection = () => {
                       </span>
                     )}
                   </div>
-                  <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center justify-between">
                     <div>
                       <span className="font-semibold text-gold text-xl">
                         {new Intl.NumberFormat("id-ID", {
@@ -159,14 +158,12 @@ export const RoomsSection = () => {
                     </div>
                   </div>
                   <Button
-                    className="w-full"
-                    color="primary"
-                    variant="flat"
+                    className="w-full mt-2"
+                    variant="default"
                     onClick={() => navigate(`/rooms/${room.id}`)}>
                     Lihat Detail
                   </Button>
-                </div>
-              </CardBody>
+                </CardContent>
             </Card>
           ))}
         </div>
