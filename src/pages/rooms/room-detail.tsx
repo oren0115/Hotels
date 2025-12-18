@@ -1,22 +1,24 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { Card, CardContent } from "../../components/ui/card";
-import { Button } from "../../components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/tabs";
-import { Separator } from "../../components/ui/separator";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Separator } from "@/components/ui/separator";
 import { Icon } from "@iconify/react";
-import { rooms, amenityIcons } from "./room-data";
+import { AMENITY_ICONS, getRoomById } from "@/data";
+import { formatCurrency, formatCamelToTitle } from "@/utils";
+import { ROUTES } from "@/constants";
 
 const RoomDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const room = rooms.find((r) => r.id === (id ? parseInt(id) : -1));
+  const room = id ? getRoomById(parseInt(id)) : undefined;
 
   if (!room) {
     return (
       <main className="pt-[100px] pb-16">
         <div className="container mx-auto px-section text-center">
           <h1 className="text-3xl font-bold mb-4">Kamar Tidak Ditemukan</h1>
-          <Button onClick={() => navigate("/rooms")}>
+          <Button onClick={() => navigate(ROUTES.ROOMS)}>
             Kembali ke Daftar Kamar
           </Button>
         </div>
@@ -30,7 +32,7 @@ const RoomDetail = () => {
         <Button
           variant="ghost"
           className="mb-6 flex items-center gap-2"
-          onClick={() => navigate("/rooms")}>
+          onClick={() => navigate(ROUTES.ROOMS)}>
           <Icon icon="lucide:arrow-left" className="w-4 h-4" />
           Kembali ke Daftar Kamar
         </Button>
@@ -59,12 +61,7 @@ const RoomDetail = () => {
               <div>
                 <h1 className="text-3xl font-bold mb-2">{room.title}</h1>
                 <p className="text-2xl font-semibold text-gold mb-4">
-                  <span>
-                    {new Intl.NumberFormat("id-ID", {
-                      style: "currency",
-                      currency: "IDR",
-                    }).format(room.price)}
-                  </span>{" "}
+                  <span>{formatCurrency(room.price)}</span>{" "}
                   <span className="text-sm text-gray-500">per malam</span>
                 </p>
 
@@ -112,7 +109,7 @@ const RoomDetail = () => {
                       {Object.entries(room.policies).map(([key, value]) => (
                         <div key={key}>
                           <p className="text-sm text-gray-500 capitalize">
-                            {key.replace(/([A-Z])/g, " $1").trim()}
+                            {formatCamelToTitle(key)}
                           </p>
                           <p>{value}</p>
                         </div>
@@ -127,17 +124,11 @@ const RoomDetail = () => {
                   {room.amenities.map((amenity) => (
                     <div key={amenity} className="flex items-center gap-2">
                       <Icon
-                        icon={
-                          amenityIcons[amenity as keyof typeof amenityIcons]
-                            .icon
-                        }
+                        icon={AMENITY_ICONS[amenity].icon}
                         className="w-5 h-5 text-gray-500"
                       />
                       <span className="text-gray-500">
-                        {
-                          amenityIcons[amenity as keyof typeof amenityIcons]
-                            .label
-                        }
+                        {AMENITY_ICONS[amenity].label}
                       </span>
                     </div>
                   ))}
@@ -150,7 +141,7 @@ const RoomDetail = () => {
                   <Button
                     variant="outline"
                     size="lg"
-                    onClick={() => navigate("/contact")}>
+                    onClick={() => navigate(ROUTES.CONTACT)}>
                     Hubungi Kami
                   </Button>
                 </div>

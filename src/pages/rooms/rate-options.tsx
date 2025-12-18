@@ -1,48 +1,11 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Card, CardContent } from "../../components/ui/card";
-import { Button } from "../../components/ui/button";
-import { Spinner } from "../../components/ui/spinner";
-
-const rateCategories = [
-  {
-    id: "standard",
-    name: "Tarif Standard",
-    price: 199999,
-    description: "Kamar basic dengan fasilitas esensial.",
-    features: ["WiFi Gratis", "TV", "AC", "Kamar Mandi Dalam"],
-  },
-  {
-    id: "deluxe",
-    name: "Tarif Deluxe",
-    price: 299999,
-    description: "Kenyamanan lebih dengan fasilitas premium.",
-    features: [
-      "WiFi Gratis",
-      "Smart TV",
-      "AC",
-      "Kamar Mandi Dalam",
-      "Mini Bar",
-      "Layanan Kamar",
-    ],
-  },
-  {
-    id: "suite",
-    name: "Tarif Suite",
-    price: 499999,
-    description: "Pengalaman menginap mewah dengan semua fasilitas lengkap.",
-    features: [
-      "WiFi Gratis",
-      "Smart TV",
-      "AC",
-      "Kamar Mandi Dalam",
-      "Mini Bar",
-      "Layanan Kamar",
-      "Jacuzzi",
-      "City View",
-    ],
-  },
-];
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
+import { RATE_CATEGORIES } from "@/data";
+import { formatCurrency } from "@/utils";
+import { ROUTES } from "@/constants";
 
 export const RateOptions = () => {
   const { id } = useParams();
@@ -71,15 +34,12 @@ export const RateOptions = () => {
           Sesuaikan pengalaman menginap Anda dengan memilih paket tarif yang paling cocok.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {rateCategories.map((rate) => (
+          {RATE_CATEGORIES.map((rate) => (
             <Card key={rate.id} className="hover:shadow-lg transition-shadow">
               <CardContent className="p-6 space-y-4">
                 <h3 className="text-xl font-semibold mb-2">{rate.name}</h3>
                 <p className="text-2xl font-bold text-gold mb-4">
-                  {new Intl.NumberFormat("id-ID", {
-                    style: "currency",
-                    currency: "IDR",
-                  }).format(rate.price)}
+                  {formatCurrency(rate.price)}
                 </p>
                 <p className="text-gray-600 mb-4">{rate.description}</p>
                 <ul className="space-y-2 mb-6">
@@ -92,7 +52,7 @@ export const RateOptions = () => {
                 </ul>
                 <Button
                   className="w-full"
-                  onClick={() => navigate(`/rooms/${id}/book?rate=${rate.id}`)}>
+                  onClick={() => navigate(ROUTES.ROOM_BOOK(id || "", rate.id))}>
                   Pilih Tarif
                 </Button>
               </CardContent>

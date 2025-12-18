@@ -1,45 +1,18 @@
 import React from "react";
-import { Card, CardContent } from "../../components/ui/card";
-import { Input } from "../../components/ui/input";
-import { Textarea } from "../../components/ui/textarea";
-import { Button } from "../../components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../components/ui/select";
-import { Spinner } from "../../components/ui/spinner";
+} from "@/components/ui/select";
+import { Spinner } from "@/components/ui/spinner";
 import { Icon } from "@iconify/react";
-
-const contactInfo = [
-  {
-    icon: "lucide:map-pin",
-    title: "Alamat",
-    content: "123 Tangerang Banten Indonesia",
-    link: "https://maps.google.com",
-  },
-  {
-    icon: "lucide:phone",
-    title: "Telepon",
-    content: "+62 8123456789",
-    link: "tel:+62 8123456789",
-  },
-  {
-    icon: "lucide:mail",
-    title: "Email",
-    content: "info@tangeranghotel.com",
-    link: "mailto:info@tangeranghotel.com",
-  },
-];
-
-const subjects = [
-  { key: "general", label: "Pertanyaan Umum" },
-  { key: "reservation", label: "Pertanyaan Reservasi" },
-  { key: "feedback", label: "Masukan" },
-  { key: "support", label: "Dukungan" },
-];
+import { CONTACT_INFO, CONTACT_SUBJECTS } from "@/data";
 
 const Contact = () => {
   const [formData, setFormData] = React.useState({
@@ -131,7 +104,7 @@ const Contact = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-          {contactInfo.map((info, index) => (
+          {CONTACT_INFO.map((info, index) => (
             <Card key={index} className="text-center">
               <CardContent className="p-6">
                 <div className="flex flex-col items-center">
@@ -211,7 +184,7 @@ const Contact = () => {
                       <SelectValue placeholder="Pilih subjek" />
                     </SelectTrigger>
                     <SelectContent>
-                      {subjects.map((subject) => (
+                      {CONTACT_SUBJECTS.map((subject) => (
                         <SelectItem key={subject.key} value={subject.key}>
                           {subject.label}
                         </SelectItem>

@@ -1,116 +1,27 @@
 import React from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { Card, CardContent } from "../../components/ui/card";
-import { Button } from "../../components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../components/ui/select";
-import { Input } from "../../components/ui/input";
-import { Spinner } from "../../components/ui/spinner";
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Spinner } from "@/components/ui/spinner";
 import { Icon } from "@iconify/react";
-import { rooms, amenityIcons } from "../rooms/room-data";
-
-// Define the AmenityKey type based on the amenityIcons object
-type AmenityKey = keyof typeof amenityIcons;
-
-const locations = [
-  { id: "std", name: "Kamar Standard", cities: "Tangerang" },
-  { id: "stdtwin", name: "Kamar Standard Twin", cities: "Tangerang" },
-  {
-    id: "stdview",
-    name: "Kamar dengan Pemandangan Standard",
-    cities: "Tangerang",
-  },
-];
-
-// RoomCard component to display a single room
-const RoomCard = ({ room }: { room: (typeof rooms)[0] }) => {
-  const navigate = useNavigate();
-
-  return (
-    <Card className="mb-8">
-      <CardContent className="p-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <img
-            alt={room.title}
-            className="w-full h-[300px] object-cover rounded-lg"
-            src={room.image}
-          />
-          <div className="flex flex-col">
-            <div>
-              <h2 className="text-2xl font-bold mb-2">{room.title}</h2>
-              <p className="text-gray-500 mb-4">{room.description}</p>
-
-              <div className="grid grid-cols-2 gap-4 mb-6">
-                <div>
-                  <p className="text-sm text-gray-500">Ukuran Kamar</p>
-                  <p className="font-semibold">{room.size}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500">Kapasitas</p>
-                  <p className="font-semibold">{room.occupancy}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500">Jenis Tempat Tidur</p>
-                  <p className="font-semibold">{room.beds}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500">Harga per malam</p>
-                  <p className="font-semibold text-gold">
-                    {new Intl.NumberFormat("id-ID", {
-                      style: "currency",
-                      currency: "IDR",
-                    }).format(room.price)}
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex flex-wrap gap-4 mb-6">
-                {room.amenities.map((amenity) => (
-                  <div key={amenity} className="flex items-center gap-1">
-                    <Icon
-                      icon={amenityIcons[amenity as AmenityKey].icon}
-                      className="w-4 h-4 text-gray-500"
-                    />
-                    <span className="text-sm text-gray-500">
-                      {amenityIcons[amenity as AmenityKey].label}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="flex gap-4 mt-auto">
-              <Button
-                size="lg"
-                className="flex-1"
-                onClick={() => navigate(`/rooms/${room.id}`)}>
-                Lihat Detail
-              </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                onClick={() => navigate("/contact", { replace: true })}>
-                Tanyakan
-              </Button>
-            </div>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-  );
-};
+import { RoomCard } from "@/components/rooms";
+import { ROOMS } from "@/data";
+import { LOCATION_OPTIONS, getRoomTitleByLocationId } from "@/data/explore.data";
+import { ROUTES } from "@/constants";
 
 // Main Explore component
 const Explore = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = React.useState(new URLSearchParams());
   const [isSearching, setIsSearching] = React.useState(false);
-  const [results, setResults] = React.useState<typeof rooms | null>(null);
+  const [results, setResults] = React.useState<typeof ROOMS | null>(null);
 
   const selectedLocation = searchParams.get("location") || "";
   const startDate = searchParams.get("startDate");
@@ -126,18 +37,10 @@ const Explore = () => {
     // Simulate API call
     setTimeout(() => {
       // Filter rooms based on selected room type
-      const filteredResults = rooms.filter((room) => {
-        switch (selectedLocation) {
-          case "std":
-            return room.title === "Kamar Standard";
-          case "stdtwin":
-            return room.title === "Kamar Standard Twin";
-          case "stdview":
-            return room.title === "Kamar dengan Pemandangan Standard";
-          default:
-            return true;
-        }
-      });
+      const targetTitle = getRoomTitleByLocationId(selectedLocation);
+      const filteredResults = targetTitle
+        ? ROOMS.filter((room) => room.title === targetTitle)
+        : ROOMS;
       setResults(filteredResults);
       setIsSearching(false);
     }, 1200);
@@ -189,7 +92,7 @@ const Explore = () => {
                     <SelectValue placeholder="Pilih Kamar" />
                   </SelectTrigger>
                   <SelectContent>
-                    {locations.map((location) => (
+                    {LOCATION_OPTIONS.map((location) => (
                       <SelectItem key={location.id} value={location.id}>
                         <div className="flex flex-col">
                           <span>{location.name}</span>
@@ -278,7 +181,7 @@ const Explore = () => {
               </p>
             </div>
             {results.map((room) => (
-              <RoomCard key={room.id} room={room} />
+              <RoomCard key={room.id} room={room} variant="list" />
             ))}
           </div>
         ) : selectedLocation && startDate && endDate ? (

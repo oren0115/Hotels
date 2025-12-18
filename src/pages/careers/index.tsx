@@ -1,27 +1,6 @@
-import { Card, CardContent } from "../../components/ui/card";
-import { Button } from "../../components/ui/button";
-
-const Careers = () => {
-  const jobOpenings = [
-    {
-      title: "Manajer Resepsionis",
-      department: "Operasional",
-      location: "Hotel Utama",
-      type: "Penuh Waktu",
-    },
-    {
-      title: "Koki ",
-      department: "Makanan & Minuman",
-      location: "Hotel Utama",
-      type: "Penuh Waktu",
-    },
-    {
-      title: "Supervisor Housekeeping",
-      department: "Housekeeping",
-      location: "Hotel Utama",
-      type: "Penuh Waktu",
-    },
-  ];
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { JOB_OPENINGS } from "@/data";
 
   return (
     <div className="container mx-auto py-16 m-5">
@@ -91,7 +70,7 @@ const Careers = () => {
         <div className="md:col-span-2">
           <h2 className="text-2xl font-semibold mb-6">Lowongan Saat Ini</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {jobOpenings.map((job, index) => (
+            {JOB_OPENINGS.map((job, index) => (
               <div key={index}>
                 <Card>
                   <CardContent className="p-6 space-y-2">

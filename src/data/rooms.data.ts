@@ -1,4 +1,20 @@
-export const rooms = [
+/**
+ * Centralized room data and amenity configurations
+ */
+
+import type { Room, AmenityType, AmenityIcon } from "@/types";
+
+export const AMENITY_ICONS: Record<AmenityType, AmenityIcon> = {
+  wifi: { icon: "lucide:wifi", label: "WiFi Gratis" },
+  tv: { icon: "lucide:tv", label: "Smart TV" },
+  shower: { icon: "lucide:shower-head", label: "Shower Hujan" },
+  coffee: { icon: "lucide:coffee", label: "Pembuat Kopi" },
+  minibar: { icon: "lucide:wine", label: "Mini Bar" },
+  workspace: { icon: "lucide:laptop", label: "Ruang Kerja" },
+  bathtub: { icon: "lucide:bath", label: "Bathtub" },
+};
+
+export const ROOMS: Room[] = [
   {
     id: 1,
     title: "Kamar Standard Twin",
@@ -138,12 +154,12 @@ export const rooms = [
   },
 ];
 
-export const amenityIcons = {
-  wifi: { icon: "lucide:wifi", label: "WiFi Gratis" },
-  tv: { icon: "lucide:tv", label: "Smart TV" },
-  shower: { icon: "lucide:shower-head", label: "Shower Hujan" },
-  coffee: { icon: "lucide:coffee", label: "Pembuat Kopi" },
-  minibar: { icon: "lucide:wine", label: "Mini Bar" },
-  workspace: { icon: "lucide:laptop", label: "Ruang Kerja" },
-  bathtub: { icon: "lucide:bath", label: "Bathtub" },
+/**
+ * Get room by ID
+ * @param id - Room ID
+ * @returns Room object or undefined
+ */
+export const getRoomById = (id: number): Room | undefined => {
+  return ROOMS.find((room) => room.id === id);
 };
+

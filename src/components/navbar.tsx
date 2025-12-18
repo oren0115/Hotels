@@ -1,8 +1,10 @@
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Button } from "./ui/button";
+import { MAIN_MENU_ITEMS } from "@/data";
+import { APP_CONFIG, ROUTES } from "@/constants";
 
-export const AcmeLogo = () => {
+const AcmeLogo = () => {
   return (
     <svg fill="none" height="36" viewBox="0 0 32 32" width="36">
       <path
@@ -19,28 +21,20 @@ export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
 
-  const menuItems = [
-    { name: "Hotel Kami", path: "/" },
-    { name: "Jelajahi", path: "/explore" },
-    { name: "Kamar & Tarif", path: "/rooms" },
-    { name: "Fasilitas", path: "/facilities" },
-    { name: "Hubungi Kami", path: "/contact" },
-  ];
-
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-border">
       <nav className="max-w-6xl mx-auto flex items-center justify-between px-4 py-4">
         <button
           className="flex items-center gap-2"
-          onClick={() => navigate("/")}
+          onClick={() => navigate(ROUTES.HOME)}
           aria-label="Go to home"
         >
           <AcmeLogo />
-          <span className="font-bold text-lg">Tangerang Hotels</span>
+          <span className="font-bold text-lg">{APP_CONFIG.name}</span>
         </button>
 
         <div className="hidden sm:flex items-center gap-6">
-          {menuItems.map((item) => (
+          {MAIN_MENU_ITEMS.map((item) => (
             <RouterLink
               key={item.path}
               to={item.path}
@@ -72,7 +66,7 @@ export const Navbar = () => {
       {isMenuOpen && (
         <div className="sm:hidden bg-white/95 backdrop-blur-md border-t border-border">
           <div className="max-w-6xl mx-auto px-4 py-3 space-y-2">
-            {menuItems.map((item) => (
+            {MAIN_MENU_ITEMS.map((item) => (
               <RouterLink
                 key={item.path}
                 to={item.path}

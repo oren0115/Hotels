@@ -1,39 +1,8 @@
-import React from "react";
 import { Link as RouteLink } from "react-router-dom";
 import { Separator } from "./ui/separator";
 import { Icon } from "@iconify/react";
-
-const footerLinks = {
-  hotel: [
-    { name: "Tentang Kami", href: "/about" },
-    { name: "Karir", href: "/careers" },
-  ],
-  rooms: [
-    { name: "Kamar Standard Twin", href: "/rooms" },
-    { name: "Kamar Standard", href: "/rooms" },
-    { name: "Kamar dengan Pemandangan Standard", href: "/rooms" },
-    { name: "Kamar Deluxe", href: "/rooms" },
-  ],
-  facilities: [
-    { name: "Kolam Renang", href: "/facilities" },
-    { name: "Restoran", href: "/facilities" },
-    { name: "Spa & Wellness", href: "/facilities" },
-    { name: "Ruang Konferensi", href: "/facilities" },
-  ],
-  support: [
-    { name: "Pusat Bantuan", href: "/help" },
-    { name: "Syarat Layanan", href: "/terms" },
-    { name: "Kebijakan Privasi", href: "/privacy" },
-    { name: "Hubungi Kami", href: "/contact" },
-  ],
-};
-
-const socialLinks = [
-  { icon: "lucide:facebook", href: "https://facebook.com" },
-  { icon: "lucide:twitter", href: "https://twitter.com" },
-  { icon: "lucide:instagram", href: "https://instagram.com" },
-  { icon: "lucide:linkedin", href: "https://linkedin.com" },
-];
+import { FOOTER_LINKS, SOCIAL_LINKS } from "@/data";
+import { APP_CONFIG } from "@/constants";
 
 export const Footer = () => {
   return (
@@ -43,7 +12,7 @@ export const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Hotel Kami</h3>
             <ul className="space-y-2">
-              {footerLinks.hotel.map((link) => (
+              {FOOTER_LINKS.hotel.map((link) => (
                 <li key={link.name}>
                   <RouteLink
                     to={link.href}
@@ -58,7 +27,7 @@ export const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Kamar</h3>
             <ul className="space-y-2">
-              {footerLinks.rooms.map((link) => (
+              {FOOTER_LINKS.rooms.map((link) => (
                 <li key={link.name}>
                   <RouteLink
                     to={link.href}
@@ -73,7 +42,7 @@ export const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Fasilitas</h3>
             <ul className="space-y-2">
-              {footerLinks.facilities.map((link) => (
+              {FOOTER_LINKS.facilities.map((link) => (
                 <li key={link.name}>
                   <RouteLink
                     to={link.href}
@@ -88,7 +57,7 @@ export const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Dukungan</h3>
             <ul className="space-y-2">
-              {footerLinks.support.map((link) => (
+              {FOOTER_LINKS.support.map((link) => (
                 <li key={link.name}>
                   <RouteLink
                     to={link.href}
@@ -104,17 +73,16 @@ export const Footer = () => {
         <Separator className="my-8" />
 
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-gray-600">
-            ©2025 Tangerang Hotels. Semua hak dilindungi.
-          </p>
+          <p className="text-gray-600">{APP_CONFIG.copyright}</p>
           <div className="flex gap-4">
-            {socialLinks.map((link) => (
+            {SOCIAL_LINKS.map((link) => (
               <a
                 key={link.icon}
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-600 hover:text-gold transition-colors">
+                className="text-gray-600 hover:text-gold transition-colors"
+                aria-label={link.label}>
                 <Icon icon={link.icon} className="w-5 h-5" />
               </a>
             ))}
