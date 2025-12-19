@@ -19,13 +19,13 @@ import { ROUTES } from "@/constants";
 // Main Explore component
 const Explore = () => {
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = React.useState(new URLSearchParams());
+  const [searchParams, setSearchParams] = useSearchParams();
   const [isSearching, setIsSearching] = React.useState(false);
   const [results, setResults] = React.useState<typeof ROOMS | null>(null);
 
   const selectedLocation = searchParams.get("location") || "";
-  const startDate = searchParams.get("startDate");
-  const endDate = searchParams.get("endDate");
+  const startDate = searchParams.get("startDate") || "";
+  const endDate = searchParams.get("endDate") || "";
 
   const handleSearch = () => {
     if (!selectedLocation || !startDate || !endDate) {
@@ -46,27 +46,25 @@ const Explore = () => {
     }, 1200);
   };
 
-  const handleLocationChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    setSearchParams(
-      new URLSearchParams({
-        location: event.target.value,
-        ...(startDate && { startDate }),
-        ...(endDate && { endDate }),
-      })
-    );
+  const handleLocationChange = (value: string) => {
+    const newParams = new URLSearchParams();
+    newParams.set("location", value);
+    if (startDate) newParams.set("startDate", startDate);
+    if (endDate) newParams.set("endDate", endDate);
+    setSearchParams(newParams);
   };
 
   const handleDateChange = (key: "startDate" | "endDate", value: string) => {
-    setSearchParams(
-      new URLSearchParams({
-        ...(selectedLocation && { location: selectedLocation }),
-        ...(key === "startDate"
-          ? { startDate: value, ...(endDate && { endDate }) }
-          : { endDate: value, ...(startDate && { startDate }) }),
-      })
-    );
+    const newParams = new URLSearchParams();
+    if (selectedLocation) newParams.set("location", selectedLocation);
+    if (key === "startDate") {
+      newParams.set("startDate", value);
+      if (endDate) newParams.set("endDate", endDate);
+    } else {
+      newParams.set("endDate", value);
+      if (startDate) newParams.set("startDate", startDate);
+    }
+    setSearchParams(newParams);
   };
 
   return (
@@ -83,11 +81,7 @@ const Explore = () => {
                 <label className="text-sm font-medium text-gray-800">
                   Kamar mana yang Anda pilih?
                 </label>
-                <Select value={selectedLocation} onValueChange={(value) => {
-                  handleLocationChange({
-                    target: { value },
-                  } as React.ChangeEvent<HTMLSelectElement>);
-                }}>
+                <Select value={selectedLocation} onValueChange={handleLocationChange}>
                   <SelectTrigger className="bg-gray-50 text-gray-900">
                     <SelectValue placeholder="Pilih Kamar" />
                   </SelectTrigger>
@@ -138,7 +132,7 @@ const Explore = () => {
                   variant="outline"
                   className="w-full md:w-auto border-gray-200 text-gray-700"
                   onClick={() => {
-                    setSearchParams(new URLSearchParams());
+                    setSearchParams({});
                     setResults(null);
                   }}
                 >

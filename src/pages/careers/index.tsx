@@ -2,7 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { JOB_OPENINGS } from "@/data";
 
-export function Careers() {
+const Careers = () => {
   return (
     <div className="container mx-auto py-16 m-5">
       <div className="text-center mb-12">
@@ -91,4 +91,6 @@ export function Careers() {
       </div>
     </div>
   );
-}
+};
+
+export default Careers;

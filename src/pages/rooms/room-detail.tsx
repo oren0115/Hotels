@@ -111,7 +111,7 @@ const RoomDetail = () => {
                           <p className="text-sm text-gray-500 capitalize">
                             {formatCamelToTitle(key)}
                           </p>
-                          <p>{value}</p>
+                          <p>{String(value || "")}</p>
                         </div>
                       ))}
                     </div>
