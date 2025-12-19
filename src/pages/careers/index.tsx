@@ -2,6 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { JOB_OPENINGS } from "@/data";
 
+export function Careers() {
   return (
     <div className="container mx-auto py-16 m-5">
       <div className="text-center mb-12">
@@ -80,9 +81,7 @@ import { JOB_OPENINGS } from "@/data";
                     </p>
                     <p className="text-gray-600 mb-2">Lokasi: {job.location}</p>
                     <p className="text-gray-600 mb-4">Tipe: {job.type}</p>
-                    <Button>
-                      Lamar Sekarang
-                    </Button>
+                    <Button>Lamar Sekarang</Button>
                   </CardContent>
                 </Card>
               </div>
@@ -92,6 +91,4 @@ import { JOB_OPENINGS } from "@/data";
       </div>
     </div>
   );
-};
-
-export default Careers;
+}
